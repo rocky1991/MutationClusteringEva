@@ -8,12 +8,9 @@ import csv
 import matplotlib.pyplot as plt 
 import numpy as np
 class DBScan:
-<<<<<<< HEAD
 	def __init__(self,ep,minpts,dataset=[],labels=[]):
-=======
 	# ep is the radius for neighbors, minpts is the threshold
 	def __init__(self,ep,minpts,dataset=[]):
->>>>>>> 973d46eaa5bfa39706e601cc0877420366c93fc5
 		self.dataset = dataset
 		self.ep = ep
 		self.minpts = minpts
@@ -36,12 +33,12 @@ class DBScan:
 
 		self.dataset = np.asmatrix(newMatrix)
 
-<<<<<<< HEAD
+
 
 mydb = DBScan(ep=5,minpts=2)
 mydb.readData('/home/rocky/Desktop/SoftwareTestingAnalysis/project/FCPS/01FCPSdata/Target.lrn')
 print(mydb.dataset)
-=======
+
 	# Calculate Euclidean distance of two array
 	def euc_dist(self,x,y):
 		x = np.array(x)
@@ -86,4 +83,4 @@ print(len(mydb.dataset))
 
 # plt.scatter(np.array(mydb.dataset[501:750,0]),np.array(mydb.dataset[501:750,1]),c='blue')
 # plt.show()
->>>>>>> 973d46eaa5bfa39706e601cc0877420366c93fc5
+

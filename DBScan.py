@@ -8,13 +8,14 @@ import csv
 import matplotlib.pyplot as plt 
 import numpy as np
 class DBScan:
-	def __init__(self,ep,minpts,dataset=[],labels=[]):
+	def __init__(self,ep,minpts,dataset=[],labels=[],point_neighbors=[],cores_index=[]):
 	# ep is the radius for neighbors, minpts is the threshold
-	def __init__(self,ep,minpts,dataset=[]):
 		self.dataset = dataset
 		self.ep = ep
 		self.minpts = minpts
 		self.labels = labels
+		self.point_neighbors = point_neighbors
+		self.cores_index = cores_index
 
 	# Read data in, give n file path, and length of header in number of rows
 	def readData(self,file_path,skip_n):
@@ -49,28 +50,45 @@ print(mydb.dataset)
 	# if yes, then it is a core point
 	def find_cores_index(self):
 		n = self.dataset[:,0].size
-		cores_index = []
-		labels = np.zeros(n)
+		self.cores_index = []
+		
+		self.point_neighbors = []
+		
 		for i in range (0,n):
 			neighbor_count = 0
+			neighbors = []
 			for j in range(0,n):
 				if(j!= i):
 					dist = self.euc_dist(self.dataset[i],self.dataset[j])
 					if(dist< self.ep):
 						neighbor_count+= 1
+						neighbors.append(j)
+			self.point_neighbors.append(neighbors)
 			if(neighbor_count>= self.minpts):
-				cores_index.append(i)
-		return cores_index
+				self.cores_index.append(i)
 
 	def clustering(self,cores_index):
-		cores_index = find_cores_index()
+		find_cores_index()
+		n = self.dataset[:,0].size
 		cluster_id = 0
-		cluster_assignment = np.zeros(len(self.dataset))
+		self.labels = np.zeros(n)
 		for i in range(0,len(cores_index)):
-			cluster_id += 1
-			cluster_assignment[cores_index[i]] = cluster_id
-
-	def densityConnected(index,cluster_id):
+			if(self.labels[cores_index[i]]==0):
+				cluster_id += 1
+				self.labels[self.cores_index[i]] = cluster_id
+				densityConnected(cores_index[i],cluster_id)
+	def contains(self,list,target):
+		flag = False
+		for item in list:
+			if(item == target):
+				flag = True
+		return flag
+	def density_connected(self,index,cluster_id):
+		neighbors_indices = self.point_neighbors[index]
+		for neighbor_index in neighbors_indices:
+			self.labels[neighbor_index] = cluster_id
+			if(self.contains(cores_index,neighbor_index)):
+				density_connected(neighbor_index,cluster_id)
 		
 
 

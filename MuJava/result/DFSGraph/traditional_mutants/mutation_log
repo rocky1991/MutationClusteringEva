@@ -1,0 +1,9 @@
+ROR_1:21:DFSGraph(int): i < v  =>   i > v
+ROR_2:21:DFSGraph(int): i < v  =>   i >= v
+ROR_3:21:DFSGraph(int): i < v  =>   i <= v
+ROR_4:21:DFSGraph(int): i < v  =>   i == v
+ROR_5:21:DFSGraph(int): i < v  =>   i != v
+ROR_6:21:DFSGraph(int): i < v  =>   true
+ROR_7:21:DFSGraph(int): i < v  =>   false
+COD_1:43:void_DFSUtil(int,boolean):!visited[n] => visited[n]
+COI_1:21:DFSGraph(int): i < v  =>  !(i < v)

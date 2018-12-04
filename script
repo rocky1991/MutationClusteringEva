@@ -1,11 +1,15 @@
-export CLASSPATH=/home/rocky/Desktop/SoftwareTestingAnalysis/project/junit-4.12.jar
+export CLASSPATH=/home/rocky/Desktop/SoftwareTestingAnalysis/project/lib/junit-4.12.jar
 export CLASSPATH=/home/rocky/Desktop/SoftwareTestingAnalysis/project/
 javac InsertionSort.java InSortTest1.java TestRunner.java 
 java TestRunner
 
-export CLASSPATH=$CLASSPATH:/home/rocky/Desktop/SoftwareTestingAnalysis/project/mujava.jar:/home/rocky/Desktop/SoftwareTestingAnalysis/project/openjava.jar/:/home/rocky/Desktop/SoftwareTestingAnalysis/project/junit-4.12.jar:/home/rocky/Desktop/SoftwareTestingAnalysis/project/hamcrest-core-1.3.jar:/home/rocky/Desktop/SoftwareTestingAnalysis/project/tools.jar
+export CLASSPATH=$CLASSPATH:/home/rocky/Desktop/SoftwareTestingAnalysis/project/lib/mujava.jar:/home/rocky/Desktop/SoftwareTestingAnalysis/project/lib/openjava.jar/:/home/rocky/Desktop/SoftwareTestingAnalysis/project/lib/junit-4.12.jar:/home/rocky/Desktop/SoftwareTestingAnalysis/project/lib/hamcrest-core-1.3.jar:/home/rocky/Desktop/SoftwareTestingAnalysis/project/lib/tools.jar
 export CLASSPATH
+/home/rocky/Documents/jdk-8u191-linux-x64/jdk1.8.0_191/bin/javac DFSGraph.java DFSTest.java 
 
-/home/rocky/Desktop/SoftwareTestingAnalysis/project/jdk-7u80-linux-x64/jdk1.7.0_80/bin/java  mujava.gui.GenMutantsMain
+/home/rocky/Documents/jdk-8u191-linux-x64/jdk1.8.0_191/bin/javac  InsertionSort.java InSortTest1.java 
 
-/home/rocky/Desktop/SoftwareTestingAnalysis/project/jdk-7u80-linux-x64/jdk1.7.0_80/bin/javac InsertionSort.java InSortTest1.java 
+/home/rocky/Documents/jdk-8u191-linux-x64/jdk1.8.0_191/bin/java mujava.gui.GenMutantsMain
+
+
+/home/rocky/Documents/jdk-8u191-linux-x64/jdk1.8.0_191/bin/java mujava.gui.RunTestMain

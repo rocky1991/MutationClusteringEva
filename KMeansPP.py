@@ -55,6 +55,30 @@ class KMeansPP:
         b = np.array(b)
         return math.sqrt(np.sum(np.square(a-b)))
 
+    # Hamming distance
+    def hamming_distance(self,a,b):
+        a = np.array(a)
+        b = np.array(b)
+        return sum(a[i] != b[i] for i in range(0, len(a)))
+
+    # Jaccard distance
+    def jaccard_distance(self,a,b):
+        a = np.array(a)
+        b = np.array(b)
+        # Both have attribute
+        ones = 0
+        # No match
+        no_match = 0
+        for i in range(0,len(a)):
+            if(a[i] == 1 and b[i] == 1):
+                ones = ones + 1
+            elif(a[i] != b[i]):
+                no_match = no_match + 1
+        if(ones + no_match == 0):
+            return 1.0
+        return (no_match / (no_match + ones))
+
+
     # Return closest point
     def find_closest(self, p, data):
         distances = []
@@ -105,18 +129,18 @@ class KMeansPP:
 
 
 mykm = KMeansPP()
-mykm.readData('/home/boy/fall_2018/data_mining/project/MutationClusteringEva/FCPS/01FCPSdata/Target.lrn',4)
-print(mykm.dataset)
-mykm.k_means_plusplus(8)
+#mykm.readData('/home/boy/fall_2018/data_mining/project/MutationClusteringEva/FCPS/01FCPSdata/Target.lrn',4)
+#print(mykm.dataset)
+#mykm.k_means_plusplus(8)
 
-x = np.asarray(mykm.dataset)[:,0]
-y = np.asarray(mykm.dataset)[:,1]
+#x = np.asarray(mykm.dataset)[:,0]
+#y = np.asarray(mykm.dataset)[:,1]
 
-colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'black', 'pink']
+#colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'black', 'pink']
 
-for i in range(0,8):
-    plt.scatter(x[mykm.clusters[i]],y[mykm.clusters[i]],c=colors[i])
+#for i in range(0,8):
+#    plt.scatter(x[mykm.clusters[i]],y[mykm.clusters[i]],c=colors[i])
 
-plt.show()
+#plt.show()
 
 

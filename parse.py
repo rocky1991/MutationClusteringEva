@@ -42,16 +42,16 @@ class muJ_parser:
 		self.out_arr = test_arr.astype(int)
 
 	def write_to_file(self):
-		with open('test_result.txt','w') as file:
+		with open('test_result/test_result.txt','w') as file:
 			file.write("")
 
-		with open('test_result.txt','a') as file:
+		with open('test_result/test_result.txt','a') as file:
 			for arr in self.out_arr:
 				file.write(str(arr.tolist()).strip("[]\n") + "\n")
 
-		with open('ids.txt','w') as file:
+		with open('test_result/ids.txt','w') as file:
 			file.write("")
-		with open('ids.txt','a') as file:
+		with open('test_result/ids.txt','a') as file:
 			for arr in self.id_arr:
 				file.write(str(arr).strip()+"\n")
 

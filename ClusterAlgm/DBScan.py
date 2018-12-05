@@ -101,4 +101,3 @@ print(len(mydb.dataset))
 
 # plt.scatter(np.array(mydb.dataset[501:750,0]),np.array(mydb.dataset[501:750,1]),c='blue')
 # plt.show()
-

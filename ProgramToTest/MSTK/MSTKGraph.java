@@ -5,7 +5,7 @@ import java.util.*;
 import java.lang.*; 
 import java.io.*; 
 
-public class Graph 
+public class MSTKGraph 
 { 
 	int totalW = 0;
 	// A class to represent a graph edge 
@@ -31,7 +31,7 @@ public class Graph
 	Edge edge[]; // collection of all edges 
 
 	// Creates a graph with V vertices and E edges 
-	public Graph(int v, int e) 
+	public MSTKGraph(int v, int e) 
 	{ 
 		V = v; 
 		E = e; 

@@ -5,13 +5,13 @@ import java.util.*;
 
 // This class represents a directed graph using adjacency list 
 // representation 
-public class Graph 
+public class BFSGraph
 { 
 	private int V; // No. of vertices 
 	private LinkedList<Integer> adj[]; //Adjacency Lists 
 	ArrayList <Integer> trace = new ArrayList<Integer>(0);
 	// Constructor 
-	public Graph(int v) 
+	public BFSGraph(int v) 
 	{ 
 		V = v; 
 		adj = new LinkedList[v]; 

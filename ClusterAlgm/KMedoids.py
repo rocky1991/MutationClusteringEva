@@ -1,6 +1,6 @@
-# Title: K-Means++ clustering algorithm implementation
+# Title: K-medoids PAM algorithm implementation
 # Author: Michael Dickensheets
-# Date: Nov 15, 2018
+# Date: Nov 30, 2018
 
 import csv
 import matplotlib.pyplot as plt
@@ -8,13 +8,12 @@ import numpy as np
 import random as r
 import math
 
-class KMeansPP:
-    def __init__(self,dim=1,dataset=[],centroids=[],clusters=[]):
+class KMedoids:
+    def __init__(self,dim=1,dataset=[],medoids=[],clusters=[]):
         self.dataset = dataset
-        self.centroids = centroids
+        self.medoids = medoids
 
-   
-    # Read data function from DBScan
+    # Read Data Function
     def readData(self,file_path,skip_n):
         newMatrix = []
         with open(file_path) as file:
@@ -32,23 +31,8 @@ class KMeansPP:
             self.dataset = np.asmatrix(newMatrix)
             self.dim = self.dataset.shape[1]
 
-    ### Helper functions ####
-    
-    # Compute a new centroid from cluster
-    def compute_centroid(self, cluster):
-        coords = []
-        for i in cluster:
-            coords.append(self.dataset[i])
-        coords = np.mean(coords, axis=0)
-        return coords
-    
-    # Weighted selector
-    def select_weighted(self, values):
-        rand = []
-        for i in values:
-            rand.append(r.randint(0,math.floor(i)))
-        return rand.index(max(rand))
-
+    ### Helper functions ###
+ 
     # Euclidian distance
     def euclidian_distance(self,a,b):
         a = np.array(a)
@@ -77,6 +61,13 @@ class KMeansPP:
         if(ones + no_match == 0):
             return 1.0
         return (no_match / (no_match + ones))
+    
+    # Weighted selector
+    def select_weighted(self, values):
+        rand = []
+        for i in values:
+            rand.append(r.randint(0,math.floor(i)))
+        return rand.index(max(rand))
 
 
     # Return closest point
@@ -86,60 +77,74 @@ class KMeansPP:
             distances.append(self.euclidian_distance(p,i))
         return (distances.index(min(distances)),min(distances))
     
+    # Compute hypothetical cost of swapping medoids
+    def swap_cost(self, cluster, point):
+        return sum(self.euclidian_distance(self.dataset[p],self.dataset[point]) for p in cluster)
+
+    # Initialize medioids
     def initialize(self,k):
         i = 1
 
-        # Choose initial centroid
-        self.centroids = np.empty((0,self.dim))
+        # Choose initial medoid
+        self.medoids = np.empty((0,self.dim))
         first = r.randint(0, self.dataset.shape[0])
-        self.centroids = np.append(self.centroids, self.dataset[first], axis=0)
+        self.medoids = np.append(self.medoids, self.dataset[first], axis=0)
         # Compute distance list
 
         while(i < k):
             distances = []
             for point in self.dataset:
-                closest = self.find_closest(point, self.centroids)
+                closest = self.find_closest(point, self.medoids)
                 distances.append(closest[1]**2 * 1000)
             toAdd = self.dataset[self.select_weighted(distances)]
-            self.centroids = np.append(self.centroids, toAdd, axis=0)
+            self.medoids = np.append(self.medoids, toAdd, axis=0)
             i += 1
 
-    def k_means_plusplus(self,k):
+    # k_medoids
+    def k_medoids(self,k):
         
-        # Initialize centroid choices
-        self.centroids = np.asmatrix(np.empty((k,self.dim)))
-        oldcentroids = self.centroids
+        # Initialize
+        self.medoids = np.asmatrix(np.empty((k,self.dim)))
+        oldmedoids = self.medoids
         self.initialize(k)
 
-        # Begin classic k-means
-        while(not np.allclose(oldcentroids, self.centroids)):
-            oldcentroids = self.centroids
+
+        # Begin Voroni
+        while(not np.allclose(oldmedoids, self.medoids)):
+            oldmedoids = self.medoids
             # Create clusters
-            self.clusters = [[] for _ in range(0,k)] 
+            self.clusters = [[] for _ in range(0,k)]
+            costs = [0 for _ in range(0,k)]
 
-            # Compute clusters
+            # Compute clusters and initial costs
             for p in range(0,self.dataset.shape[0]):
-                 closest = self.find_closest(self.dataset[p], self.centroids)[0]
-                 self.clusters[closest].append(p)
-            # Recompute centroids
-            self.centroids = np.asmatrix(np.empty((0,self.dim)))
+                closest = self.find_closest(self.dataset[p], self.medoids)
+                index = closest[0]
+                dist = closest[1]
+                self.clusters[index].append(p)
+                costs[index] += dist
+
+            # Begin swapping procedure
             for i in range(0,k):
-                toAdd = np.asarray(self.compute_centroid(self.clusters[i]))
-                self.centroids = np.append(self.centroids, toAdd, axis=0)
+                for p in self.clusters[i]:
+                    if (self.dataset[p] != self.medoids[i]).all():
+                        hypothetical = self.swap_cost(self.clusters[i],p)
+                        if (hypothetical < costs[i]):
+                            self.medoids[i] = self.dataset[p]
+                            costs[i] = hypothetical
+
+mymed = KMedoids()
+mymed.readData('/home/boy/fall_2018/data_mining/project/MutationClusteringEva/FCPS/01FCPSdata/TwoDiamonds.lrn',4)
+print(mymed.dataset)
+mymed.k_medoids(2)
 
 
-mykm = KMeansPP()
-mykm.readData('../FCPS/01FCPSdata/Target.lrn',4)
-mykm.k_means_plusplus(8)
-
-x = np.asarray(mykm.dataset)[:,0]
-y = np.asarray(mykm.dataset)[:,1]
+x = np.asarray(mymed.dataset)[:,0]
+y = np.asarray(mymed.dataset)[:,1]
 
 colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'black', 'pink']
 
-for i in range(0,8):
-    plt.scatter(x[mykm.clusters[i]],y[mykm.clusters[i]],c=colors[i])
+for i in range(0,2):
+    plt.scatter(x[mymed.clusters[i]],y[mymed.clusters[i]],c=colors[i])
 
 plt.show()
-
-

@@ -7,6 +7,8 @@ import csv
 # import pandas as pd 
 import matplotlib.pyplot as plt 
 import numpy as np
+import matplotlib.cm as cm
+
 class DBScan:
 	def __init__(self,ep,minpts,dataset=[],labels=[],point_neighbors=[],cores_index=[]):
 	# ep is the radius for neighbors, minpts is the threshold
@@ -33,13 +35,6 @@ class DBScan:
 				newMatrix.append(rowdata.astype(np.float))
 
 		self.dataset = np.asmatrix(newMatrix)
-
-
-
-mydb = DBScan(ep=5,minpts=2)
-mydb.readData('/home/rocky/Desktop/SoftwareTestingAnalysis/project/FCPS/01FCPSdata/Target.lrn')
-print(mydb.dataset)
-
 	# Calculate Euclidean distance of two array
 	def euc_dist(self,x,y):
 		x = np.array(x)
@@ -51,7 +46,6 @@ print(mydb.dataset)
 	def find_cores_index(self):
 		n = self.dataset[:,0].size
 		self.cores_index = []
-		
 		self.point_neighbors = []
 		
 		for i in range (0,n):
@@ -67,16 +61,17 @@ print(mydb.dataset)
 			if(neighbor_count>= self.minpts):
 				self.cores_index.append(i)
 
-	def clustering(self,cores_index):
-		find_cores_index()
+	def clustering(self):
+		self.find_cores_index()
 		n = self.dataset[:,0].size
 		cluster_id = 0
 		self.labels = np.zeros(n)
-		for i in range(0,len(cores_index)):
-			if(self.labels[cores_index[i]]==0):
+		for i in range(0,len(self.cores_index)):
+			if(self.labels[self.cores_index[i]]==0):
 				cluster_id += 1
 				self.labels[self.cores_index[i]] = cluster_id
-				densityConnected(cores_index[i],cluster_id)
+				self.density_connected(self.cores_index[i],cluster_id)
+
 	def contains(self,list,target):
 		flag = False
 		for item in list:
@@ -84,20 +79,56 @@ print(mydb.dataset)
 				flag = True
 		return flag
 	def density_connected(self,index,cluster_id):
+		# print("training...")
 		neighbors_indices = self.point_neighbors[index]
 		for neighbor_index in neighbors_indices:
-			self.labels[neighbor_index] = cluster_id
-			if(self.contains(cores_index,neighbor_index)):
-				density_connected(neighbor_index,cluster_id)
-		
+			if(self.labels[neighbor_index] == 0):
+				self.labels[neighbor_index] = cluster_id
+				if(self.contains(self.cores_index,neighbor_index)):
+					self.density_connected(neighbor_index,cluster_id)
+				else:
+					self.labels[neighbor_index] = cluster_id
+			else:
+				pass
+	def plot_clusters(self,file_path,skip_n):
+		self.readData(file_path,skip_n)
+		self.clustering()
+		self.labels=self.labels.astype(int)
+		num_Clusters = (max(self.labels)+1)
+		clusters = [[] for x in range(num_Clusters)]
+		for i in range(0,len(self.dataset[:,1])):
+			clusters[self.labels[i]].append(i)
+
+		x = np.arange(num_Clusters)
+		ys = [i+x+(i*x)**2 for i in range(num_Clusters)]
+		colors = iter(cm.rainbow(np.linspace(0, 1, int(num_Clusters))))
+		for i in range(0,num_Clusters):
+			plt.scatter(np.array(self.dataset[np.array(clusters[i]),0]),np.array(self.dataset[np.array(clusters[i]),1]),color=next(colors))
+
+			# plt.scatter(np.array(mydb.dataset[np.array(clusters[1]),0]),np.array(mydb.dataset[np.array(clusters[1]),1]),c='blue')
+			# plt.scatter(np.array(mydb.dataset[np.array(clusters[2]),0]),np.array(mydb.dataset[np.array(clusters[2]),1]),c='yellow')
+		plt.show()
 
 
+def main():
+	newdb = DBScan(ep=0.1,minpts=8)
+	newdb.plot_clusters('/home/rocky/Desktop/MutationClusteringEva/FCPS/01FCPSdata/Target.lrn',4)
+	# newdb = DBScan(ep=0.2,minpts=8)
+	# newdb.plot_clusters('/home/rocky/Desktop/MutationClusteringEva/FCPS/01FCPSdata/Lsun.lrn',4)
+if __name__=="__main__":
+	main()
 
-mydb = DBScan(ep=2,minpts=5)
-mydb.readData('/home/rocky/Desktop/git/SoftwareTestingAnalysis/project/FCPS/01FCPSdata/Target.lrn',4)
-print(len([1,2,3]))
-print(len(mydb.dataset))
-# plt.scatter(np.array(mydb.dataset[cores_index,0]),np.array(mydb.dataset[cores_index,1]),c='red')
+# mydb.clustering()
 
-# plt.scatter(np.array(mydb.dataset[501:750,0]),np.array(mydb.dataset[501:750,1]),c='blue')
+# mydb.labels = mydb.labels.astype(int)
+# num_Clusters = (max(mydb.labels)+1)
+# clusters = [[] for x in range(num_Clusters)]
+# for i in range(0,len(mydb.dataset[:,1])):
+# 	clusters[mydb.labels[i]].append(i)
+
+# plt.scatter(np.array(mydb.dataset[np.array(clusters[0]),0]),np.array(mydb.dataset[np.array(clusters[0]),1]),c='red')
+
+# plt.scatter(np.array(mydb.dataset[np.array(clusters[1]),0]),np.array(mydb.dataset[np.array(clusters[1]),1]),c='blue')
+# plt.scatter(np.array(mydb.dataset[np.array(clusters[2]),0]),np.array(mydb.dataset[np.array(clusters[2]),1]),c='yellow')
+
 # plt.show()

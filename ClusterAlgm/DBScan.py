@@ -1,7 +1,7 @@
 
 # Title: DB Scan clustering algorithm implemented for the data mining project
 # Author:Hongchuan Wang
-# Date: Nov 7, 2018
+# Date: Dec 6, 2018
 
 import csv
 # import pandas as pd 

@@ -111,24 +111,9 @@ class DBScan:
 
 
 def main():
-	newdb = DBScan(ep=0.1,minpts=8)
-	newdb.plot_clusters('/home/rocky/Desktop/MutationClusteringEva/FCPS/01FCPSdata/Target.lrn',4)
-	# newdb = DBScan(ep=0.2,minpts=8)
-	# newdb.plot_clusters('/home/rocky/Desktop/MutationClusteringEva/FCPS/01FCPSdata/Lsun.lrn',4)
+	# newdb = DBScan(ep=0.1,minpts=8)
+	# newdb.plot_clusters('/home/rocky/Desktop/MutationClusteringEva/FCPS/01FCPSdata/Target.lrn',4)
+	newdb = DBScan(ep=0.2,minpts=8)
+	newdb.plot_clusters('/home/rocky/Desktop/MutationClusteringEva/FCPS/01FCPSdata/Lsun.lrn',4)
 if __name__=="__main__":
 	main()
-
-# mydb.clustering()
-
-# mydb.labels = mydb.labels.astype(int)
-# num_Clusters = (max(mydb.labels)+1)
-# clusters = [[] for x in range(num_Clusters)]
-# for i in range(0,len(mydb.dataset[:,1])):
-# 	clusters[mydb.labels[i]].append(i)
-
-# plt.scatter(np.array(mydb.dataset[np.array(clusters[0]),0]),np.array(mydb.dataset[np.array(clusters[0]),1]),c='red')
-
-# plt.scatter(np.array(mydb.dataset[np.array(clusters[1]),0]),np.array(mydb.dataset[np.array(clusters[1]),1]),c='blue')
-# plt.scatter(np.array(mydb.dataset[np.array(clusters[2]),0]),np.array(mydb.dataset[np.array(clusters[2]),1]),c='yellow')
-
-# plt.show()

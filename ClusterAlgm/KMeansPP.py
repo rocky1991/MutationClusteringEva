@@ -129,15 +129,15 @@ class KMeansPP:
 
 
 mykm = KMeansPP()
-mykm.readData('../FCPS/01FCPSdata/Target.lrn',4)
-mykm.k_means_plusplus(8)
+mykm.readData('../FCPS/01FCPSdata/EngyTime.lrn',4)
+mykm.k_means_plusplus(2)
 
 x = np.asarray(mykm.dataset)[:,0]
 y = np.asarray(mykm.dataset)[:,1]
 
 colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'black', 'pink']
 
-for i in range(0,8):
+for i in range(0,2):
     plt.scatter(x[mykm.clusters[i]],y[mykm.clusters[i]],c=colors[i])
 
 plt.show()

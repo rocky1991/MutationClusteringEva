@@ -134,9 +134,9 @@ class KMedoids:
                             costs[i] = hypothetical
 
 mymed = KMedoids()
-mymed.readData('/home/boy/fall_2018/data_mining/project/MutationClusteringEva/FCPS/01FCPSdata/TwoDiamonds.lrn',4)
+mymed.readData('../FCPS/01FCPSdata/TwoDiamonds.lrn',4)
 print(mymed.dataset)
-mymed.k_medoids(2)
+mymed.k_medoids(4)
 
 
 x = np.asarray(mymed.dataset)[:,0]
@@ -144,7 +144,7 @@ y = np.asarray(mymed.dataset)[:,1]
 
 colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'black', 'pink']
 
-for i in range(0,2):
+for i in range(0,4):
     plt.scatter(x[mymed.clusters[i]],y[mymed.clusters[i]],c=colors[i])
 
 plt.show()

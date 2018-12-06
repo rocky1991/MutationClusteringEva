@@ -165,18 +165,4 @@ class KMedoids:
                             costs[i] = hypothetical
             
 
-#mymed = KMedoids()
-#mymed.readBin('../test_result/MSTP_bin_result.txt')
-#mymed.k_medoids(20)
 
-#print(mymed.clusters)
-
-#x = np.asarray(mymed.dataset)[:,0]
-#y = np.asarray(mymed.dataset)[:,1]
-
-#colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'black', 'pink']
-
-#for i in range(0,2):
-#    plt.scatter(x[mymed.clusters[i]],y[mymed.clusters[i]],c=colors[i])
-
-#plt.show()

@@ -5,10 +5,17 @@ export CLASSPATH
 /home/rocky/Documents/jdk-8u191-linux-x64/jdk1.8.0_191/bin/javac DepthFirstIterator.java DFSIteratorTest.java 
 
 /home/rocky/Documents/jdk-8u191-linux-x64/jdk1.8.0_191/bin/javac DFSGraph.java DFSTest.java 
+/home/rocky/Documents/jdk-8u191-linux-x64/jdk1.8.0_191/bin/javac BFSGraph.java BFSTest.java 
+/home/rocky/Documents/jdk-8u191-linux-x64/jdk1.8.0_191/bin/javac MSTKGraph.java MSTKTest.java 
+/home/rocky/Documents/jdk-8u191-linux-x64/jdk1.8.0_191/bin/javac MST.java MSTTest.java 
+
+
+
+
 
 /home/rocky/Documents/jdk-8u191-linux-x64/jdk1.8.0_191/bin/javac  InsertionSort.java InSortTest1.java 
 
 /home/rocky/Documents/jdk-8u191-linux-x64/jdk1.8.0_191/bin/java mujava.gui.GenMutantsMain
 
 
-/home/rocky/Documents/jdk-8u191-linux-x64/jdk1.8.0_191/bin/java mujava.gui.RunTestMain
+/home/rocky/Documents/jdk-8u191-linux-x64/jdk1.8.0_191/bin/java mujava.gui.RunTestMain >output.txt

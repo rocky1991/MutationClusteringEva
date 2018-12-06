@@ -1,0 +1,6 @@
+int_minKey(int,java.lang.Boolean)
+int_getMstSize()
+void_setMstSize(int)
+void_printMST(int,int,int)
+int_getTotalW()
+void_primMST(int,int)

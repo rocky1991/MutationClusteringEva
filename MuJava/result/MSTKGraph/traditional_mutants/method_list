@@ -1,0 +1,6 @@
+int_compareTo(MSTKGraph.Edge)
+MSTKGraph(int,int)
+int_getTotalW()
+int_find(MSTKGraph.subset,int)
+void_Union(MSTKGraph.subset,int,int)
+void_KruskalMST()
